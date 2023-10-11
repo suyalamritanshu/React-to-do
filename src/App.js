@@ -1,27 +1,18 @@
 import "./css/main.css";
-import DisplayTodos from "./components/DisplayTodos";
-import Todo from "./components/Todo";
-
+import { Routes, Route } from 'react-router-dom';
 import { motion } from "framer-motion";
+import Main from "./Main";
+import Signup from '../src/components/Signup/signup';
+import Login from './components/Login/login'
+
 function App() {
   return (
-    <div className="App">
-      <motion.h1
-        initial={{ y: -200 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", duration: 0.5 }}
-        whileHover={{ scale: 1.1 }}
-      >
-        Todo App
-      </motion.h1>
-      <motion.div
-        initial={{ y: 1000 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", duration: 1 }}
-      >
-        <Todo />
-        <DisplayTodos />
-      </motion.div>
+    <div>
+      <Routes>
+        <Route exact path="/" element={<Main />} />
+        <Route exact path="/register" element={<Signup />} />
+        <Route exact path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 }
