@@ -18,6 +18,7 @@ const DisplayTodos = (props) => {
         }
       }).then((res) => {
         setData(res.data.tasks)
+        console.log("first",res.data.tasks)
       }).catch((err) => {
         console.log(err);
       })
@@ -31,11 +32,13 @@ const DisplayTodos = (props) => {
         <AnimatePresence>
           {data.length > 0
             ? data.map((item) => {
+              console.log("items",item.completed)
               return (
-                item.completed === false && (
+                (
                   <TodoItem
                     key={item._id}
-                    item={item.description}
+                    id={item._id}
+                    item={item}
                     removeTodo={props.removeTodo}
                     updateTodo={updateTodo}
                     completeTodo={completeTodo}
@@ -44,34 +47,8 @@ const DisplayTodos = (props) => {
               );
             })
             : null}
-          {data.length > 0
-            ? data.map((item) => {
-              return (
-                item.completed === true && (
-                  <TodoItem
-                    key={item._id}
-                    item={item.description}
-                    removeTodo={props.removeTodo}
-                    updateTodo={updateTodo}
-                    completeTodo={completeTodo}
-                  />
-                )
-              );
-            })
-            : null}
-          {data.length > 0
-            ? data.map((item) => {
-              return (
-                <TodoItem
-                  key={item._id}
-                  item={item.description}
-                  removeTodo={props.removeTodo}
-                  updateTodo={updateTodo}
-                  completeTodo={completeTodo}
-                />
-              );
-            })
-            : null}
+           
+          
         </AnimatePresence>
       </ul>
     </div>

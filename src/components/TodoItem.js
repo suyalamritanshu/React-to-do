@@ -5,8 +5,8 @@ import { IoCheckmarkDoneSharp, IoClose } from "react-icons/io5";
 import axios from "axios";
 
 
-const TodoItem = (props) => {
-    const { item  } = props;
+const TodoItem = ({item}) => {
+    // const { item,description,id} = props;
   const [todo, setTodo] = useState("");
 
   
@@ -20,31 +20,36 @@ const TodoItem = (props) => {
     const update = (id, value, e) => {
       if (e.which === 13) {
         //here 13 is key code for enter key
-        updateTodo({ id, item: value });
+        updateTodo({ id, value});
         inputRef.current.disabled = true;
       }
     };
 
     const taskData = {
-      "description": todo,
-      "completed": false,
+      "description": "workinfb",
+      "completed": "false"
     }
   
     const completeData = {
-      "description": todo,
-      "completed": true,
+      
+      "completed": true
     }
   
 
     const updateTodo = async(id) => {
-      await axios.patch(`https://task-manager-eight-blond.vercel.app/tasks/${id}`, taskData, {
+console.log("none",id.id,id.value)
+      await axios.patch(`https://task-manager-eight-blond.vercel.app/tasks/${id.id}`, {
+        "description": id.value,
+      "completed": false
+      }
+      , {
         headers: {
           Authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTI1YTIwOTBmNWJkYTQ3YTM0OWZjNjUiLCJpYXQiOjE2OTY5NjUzMTN9.qwZ93Xcm1Ls31kcJz5WecJJ04_w9HHdOAMMujZ3XJdk"
           }
       }).then((res)=>{
         console.log(res.message);
       }).catch((err)=>{
-        console.log(err);
+        console.log(err.message);
       })
     }
   
@@ -61,6 +66,7 @@ const TodoItem = (props) => {
     }
   
     const completeTodo = async(id) => {
+      console.log("complere ",id)
       await axios.patch(`https://task-manager-eight-blond.vercel.app/tasks/${id}`, completeData, {
         headers: {
           Authorization : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTI1YTIwOTBmNWJkYTQ3YTM0OWZjNjUiLCJpYXQiOjE2OTY5NjUzMTN9.qwZ93Xcm1Ls31kcJz5WecJJ04_w9HHdOAMMujZ3XJdk"
@@ -68,9 +74,11 @@ const TodoItem = (props) => {
       }).then((res)=>{
         console.log(res.message);
       }).catch((err)=>{
-        console.log(err);
+        console.log(err.message);
       })
     }
+    console.log("props itme ",item.description,item._id)
+
     return (
       <motion.li
         initial={{ x: "150vw", transition: { type: "spring", duration: 2 } }}
@@ -91,8 +99,8 @@ const TodoItem = (props) => {
         <textarea
           ref={inputRef}
           disabled={inputRef}
-          defaultValue={item.item}
-          onKeyPress={(e) => update(item.id, inputRef.current.value, e)}
+          defaultValue={item.description}
+          onKeyPress={(e) => update(item._id, inputRef.current.value, e)}
         />
         <div className="btns">
           <motion.button
@@ -103,7 +111,7 @@ const TodoItem = (props) => {
             {" "}
             <AiFillEdit />{" "}
           </motion.button>
-          {item.completed === false && (
+          { (
             <motion.button
               whileHover={{ scale: 1.4 }}
               whileTap={{ scale: 0.9 }}
