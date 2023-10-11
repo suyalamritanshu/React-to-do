@@ -1,5 +1,5 @@
 import "./css/main.css";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, redirect } from 'react-router-dom';
 import { motion } from "framer-motion";
 import Main from "./Main";
 import Signup from '../src/components/Signup/signup';
@@ -10,8 +10,9 @@ function App() {
     <div>
       <Routes>
         <Route exact path="/" element={<Main />} />
-        <Route exact path="/register" element={<Signup />} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Signup />} />
+       
       </Routes>
     </div>
   );

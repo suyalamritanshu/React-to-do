@@ -62,7 +62,7 @@ const Login = () => {
             <label>Password:</label>
             <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} />
             <button  onClick={() => handelclick()}>Login</button>
-
+            <p style={{ cursor: 'pointer', display: 'flex', alignItems: "center", justifyContent: 'center', marginTop: '2rem'}} onClick={()=> navigate('/register')}>Sign Up Here</p>
             {loading && <Loading />}
         </div>
 

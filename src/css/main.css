@@ -30,12 +30,32 @@ body {
   flex-direction: column;
 }
 
+.motion_login{
+  margin-bottom: 2rem;
+}
+
+.app_header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+
 .App h1 {
   display: inline;
   text-align: center;
   margin-bottom: 2rem;
   color: #e1ebfd;
+  text-shadow: 0 0 5px #433aa8, 3px -1px 5px #271c6c;
+}
 
+.App  div h1 {
+  display: inline;
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: 0rem;
+  color: #e1ebfd;
   text-shadow: 0 0 5px #433aa8, 3px -1px 5px #271c6c;
 }
 
@@ -47,7 +67,6 @@ body {
 .todo-input {
   min-width: 15rem;
   width: 40vw;
-
   max-height: 2.5rem;
   background-color: #e1ebfd;
   border: none;
