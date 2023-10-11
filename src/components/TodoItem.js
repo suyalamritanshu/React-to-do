@@ -3,13 +3,12 @@ import React, { useRef, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { IoCheckmarkDoneSharp, IoClose } from "react-icons/io5";
 import axios from "axios";
+import Loading from "./Loading/loading";
 
 
 const TodoItem = ({ item }) => {
   // const { item,description,id} = props;
-  const [todo, setTodo] = useState("");
-
-
+  const [loading, setloading] = useState(false);
   const inputRef = useRef(true);
 
   const changeFocus = () => {
@@ -25,17 +24,13 @@ const TodoItem = ({ item }) => {
     }
   };
 
-  const taskData = {
-    "description": "workinfb",
-    "completed": "false"
-  }
-
   const completeData = {
     "completed": true
   }
 
 
   const updateTodo = async (id) => {
+    setloading(true);
     await axios.patch(`https://task-manager-eight-blond.vercel.app/tasks/${id.id}`, {
       "description": id.value,
       "completed": false
@@ -45,32 +40,40 @@ const TodoItem = ({ item }) => {
           Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTI1YTIwOTBmNWJkYTQ3YTM0OWZjNjUiLCJpYXQiOjE2OTY5NjUzMTN9.qwZ93Xcm1Ls31kcJz5WecJJ04_w9HHdOAMMujZ3XJdk"
         }
       }).then((res) => {
-        console.log(res.message);
+        setloading(false)
+        console.log(res.data.message);
+        window.location.reload();
       }).catch((err) => {
         console.log(err.message);
       })
   }
 
   const removeTodo = async (id) => {
+    setloading(true)
     await axios.delete(`https://task-manager-eight-blond.vercel.app/tasks/${id}`, {
       headers: {
         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTI1YTIwOTBmNWJkYTQ3YTM0OWZjNjUiLCJpYXQiOjE2OTY5NjUzMTN9.qwZ93Xcm1Ls31kcJz5WecJJ04_w9HHdOAMMujZ3XJdk"
       }
     }).then((res) => {
-      console.log(res.message);
+      setloading(false)
+      console.log(res.data.message);
+      window.location.reload();
     }).catch((err) => {
       console.log(err);
     })
   }
 
   const completeTodo = async (id) => {
+    setloading(true)
     console.log("complere ", id)
     await axios.patch(`https://task-manager-eight-blond.vercel.app/tasks/${id}`, completeData, {
       headers: {
         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTI1YTIwOTBmNWJkYTQ3YTM0OWZjNjUiLCJpYXQiOjE2OTY5NjUzMTN9.qwZ93Xcm1Ls31kcJz5WecJJ04_w9HHdOAMMujZ3XJdk"
       }
     }).then((res) => {
-      console.log(res.message);
+      setloading(false)
+      console.log(res.data.message);
+      window.location.reload();
     }).catch((err) => {
       console.log(err.message);
     })
@@ -130,6 +133,7 @@ const TodoItem = ({ item }) => {
         </motion.button>{" "}
       </div>
       {item.completed && <span className="completed">done</span>}
+      {loading && <Loading />}
     </motion.li>
   );
 };

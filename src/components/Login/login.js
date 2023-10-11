@@ -15,18 +15,16 @@ const Login = () => {
     const [password, setpassword] = useState('');
     const [loading, setloading] = useState(false);
 
-
     const navigate = useNavigate();
-
 
     useEffect(() => {
         AOS.init({
             once: true
-
         });
     }, [])
 
     const handelclick = async () => {
+        setloading(true);
         var login = {
             method: 'post',
             url: "https://task-manager-eight-blond.vercel.app/users/login",
@@ -42,7 +40,10 @@ const Login = () => {
         await axios(login)
             .then(async (res) => {
                 localStorage.setItem('token', res.data.token)
+                localStorage.setItem('id', res.data.user._id)
                 setloading(false);
+                navigate('/');
+
             })
             .catch((err) => {
                 console.log(err);
@@ -60,10 +61,10 @@ const Login = () => {
             <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             <label>Password:</label>
             <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} />
-            <button type="submit" onClick={handelclick()}>Login</button>
+            <button  onClick={() => handelclick()}>Login</button>
 
+            {loading && <Loading />}
         </div>
-
 
 
     )

@@ -6,6 +6,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Loading from '../Loading/loading'
 import axios from 'axios';
+import './signup.css';
 
 const Signup = () => {
     const [name, setname] = useState('');
@@ -20,6 +21,7 @@ const Signup = () => {
     }, [])
 
     const handelclick = async () => {
+        setloading(true);
         var register = {
             method: 'post',
             url: "https://task-manager-eight-blond.vercel.app/users/register",
@@ -35,21 +37,18 @@ const Signup = () => {
 
         await axios(register)
             .then((res) => {
-                console.log(res.data.data._id)
-                if (res.status === 200) {
-                    localStorage.setItem('token', res.data.token)
-                    setloading(false);
-                    navigate('/');
-                    window.location.reload();
-                }
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('id', res.data.user._id)
+                setloading(false);
+                navigate('/');
             })
             .catch((err) => {
-                console.log(err.response.data.msg);
-                toast.error(err.response.data.msg);
+                setloading(false);
+                console.log(err);
             })
-    } 
+    }
 
-    return ( 
+    return (
         <div className="form-container">
             <label>Name:</label>
             <input type="text" value={name} onChange={(e) => setname(e.target.value)} />
@@ -57,7 +56,8 @@ const Signup = () => {
             <input type="text" value={email} onChange={(e) => setemail(e.target.value)} />
             <label>Password:</label>
             <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} />
-            <button type="submit" onClick={handelclick()}>Sign Up</button>
+            <button onClick={() => handelclick()}>Sign Up</button>
+            {loading && <Loading />}
         </div>
     )
 }
