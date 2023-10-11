@@ -49,7 +49,7 @@ const Signup = () => {
             })
     }
 
-    return (
+    return ( 
         <div className="form-container">
             <label>Name:</label>
             <input type="text" value={name} onChange={(e) => setname(e.target.value)} />
