@@ -29,6 +29,7 @@ const Todos = () => {
           }
       });
       setloading(false);
+      window.location.reload();
       setTodo("");
     }
   };
