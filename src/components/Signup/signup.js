@@ -47,7 +47,7 @@ const Signup = () => {
                 console.log(err.response.data.msg);
                 toast.error(err.response.data.msg);
             })
-    }
+    } 
 
     return ( 
         <div className="form-container">
